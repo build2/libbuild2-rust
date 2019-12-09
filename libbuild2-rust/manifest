@@ -1,0 +1,14 @@
+: 1
+name: libbuild2-rust
+version: 0.1.0-a.0.z
+project: build2
+summary: Rust build system module for build2
+license: MIT ; MIT License.
+description-file: README.md
+url: https://github.com/build2/libbuild2-rust
+email: users@build2.org
+build-email: builds@build2.org
+builds: all
+depends: * build2 >= 0.12.0
+depends: * bpkg >= 0.12.0
+tests: libbuild2-rust-tests == $

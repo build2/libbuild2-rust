@@ -1,0 +1,6 @@
+project = libbuild2-rust
+
+using version
+using config
+using install
+using dist

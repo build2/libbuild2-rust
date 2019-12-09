@@ -1,0 +1,3 @@
+# Use forwarded configuration to prepare distributions.
+#
+--forward

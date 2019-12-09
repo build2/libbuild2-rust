@@ -1,0 +1,4 @@
+: 1
+location: libbuild2-rust/
+:
+location: libbuild2-rust-tests/

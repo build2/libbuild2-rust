@@ -1,0 +1,6 @@
+project = libbuild2-rust-tests
+
+using version
+using config
+using test
+using dist

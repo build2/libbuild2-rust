@@ -1,0 +1,46 @@
+int_libs = # Interface dependencies.
+imp_libs = # Implementation dependencies.
+
+import imp_libs += build2%lib{build2} # Implied interface dependency.
+
+lib{build2-rust}: {hxx ixx txx cxx}{**} $imp_libs $int_libs
+
+# Build options.
+#
+cxx.poptions =+ "-I$out_root" "-I$src_root"
+
+obja{*}: cxx.poptions += -DLIBBUILD2_RUST_STATIC_BUILD
+objs{*}: cxx.poptions += -DLIBBUILD2_RUST_SHARED_BUILD
+
+# Export options.
+#
+lib{build2-rust}:
+{
+  cxx.export.poptions = "-I$out_root" "-I$src_root"
+  cxx.export.libs = $int_libs
+}
+
+liba{build2-rust}: cxx.export.poptions += -DLIBBUILD2_RUST_STATIC
+libs{build2-rust}: cxx.export.poptions += -DLIBBUILD2_RUST_SHARED
+
+# For pre-releases use the complete version to make sure they cannot be used
+# in place of another pre-release or the final version. See the version module
+# for details on the version.* variable values.
+#
+if $version.pre_release
+  lib{build2-rust}: bin.lib.version = @"-$version.project_id"
+else
+  lib{build2-rust}: bin.lib.version = @"-$version.major.$version.minor"
+
+# Embed the build system core version as our load suffix.
+#
+libs{build2-rust}: bin.lib.load_suffix = "-$build.version.interface"
+
+# Install into the libbuild2/rust/ subdirectory of, say, /usr/include/
+# recreating subdirectories.
+#
+{hxx ixx txx}{*}:
+{
+  install         = include/libbuild2/rust/
+  install.subdirs = true
+}

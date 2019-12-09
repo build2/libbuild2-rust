@@ -1,0 +1,3 @@
+# Submit the module, not the tests.
+#
+--config-name mod
