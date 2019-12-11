@@ -1,10 +1,9 @@
 using rust
-using c
 
 # Every exe{} in this project is by default a test.
 #
 exe{*}: test = true
 
 # The test target for cross-testing (running tests under Wine, etc).
-#
-test.target = $c.target
+# @@ TODO
+#test.target = $rust.target

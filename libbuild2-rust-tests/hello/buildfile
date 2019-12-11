@@ -1,2 +1,1 @@
-#exe{hello}: rs{hello} testscript
-exe{hello}: c{hello} testscript
+exe{hello}: rs{hello} testscript
