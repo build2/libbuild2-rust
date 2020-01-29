@@ -11,7 +11,7 @@ namespace build2
 {
   namespace rust
   {
-    class module: public module_base,
+    class module: public build2::module,
                   public virtual data,
                   public compile_rule
     {

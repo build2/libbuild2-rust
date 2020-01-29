@@ -25,10 +25,9 @@ namespace build2
     guess_init (scope& rs,
                 scope& bs,
                 const location& loc,
-                unique_ptr<module_base>& mod,
                 bool,
                 bool,
-                const variable_map&)
+                module_init_extra& extra)
     {
       tracer trace ("rust::guess_init");
       l5 ([&]{trace << "for " << bs;});
@@ -83,7 +82,7 @@ namespace build2
         r_mode.assign (++val.begin (), val.end ());
       }
 
-      mod.reset (
+      extra.set_module (
         new module (
           data {
             //-
@@ -108,10 +107,9 @@ namespace build2
     config_init (scope& rs,
                  scope& bs,
                  const location& loc,
-                 unique_ptr<module_base>& mod,
                  bool,
                  bool,
-                 const variable_map&)
+                 module_init_extra& extra)
     {
       tracer trace ("rust::const_init");
       l5 ([&]{trace << "for " << bs;});
@@ -119,10 +117,10 @@ namespace build2
       if (&rs != &bs)
         fail (loc) << "rust.config module must be loaded in project root";
 
-      // Load rust.guess and take its module.
+      // Load rust.guess and share its module instance as ours.
       //
-      mod = move (load_module (rs, rs, "rust.guess", loc));
-      module& m (static_cast<module&> (*mod));
+      extra.module = load_module (rs, rs, "rust.guess", loc, extra.hints);
+      auto& m (extra.module_as<module> ());
 
       // If this is a new value (e.g., we are configuring), then print the
       // report at verbosity level 2 and up (-v).
@@ -156,10 +154,9 @@ namespace build2
     init (scope& rs,
           scope& bs,
           const location& loc,
-          unique_ptr<module_base>& mod,
           bool,
           bool,
-          const variable_map&)
+          module_init_extra& extra)
     {
       tracer trace ("rust::init");
       l5 ([&]{trace << "for " << bs;});
@@ -167,10 +164,10 @@ namespace build2
       if (&rs != &bs)
         fail (loc) << "rust module must be loaded in project root";
 
-      // Load rust.config and take its module.
+      // Load rust.config and share its module instance as ours.
       //
-      mod = move (load_module (rs, rs, "rust.config", loc));
-      module& m (static_cast<module&> (*mod));
+      extra.module = load_module (rs, rs, "rust.config", loc, extra.hints);
+      auto& m (extra.module_as<module> ());
 
       //-
       // Target types:
