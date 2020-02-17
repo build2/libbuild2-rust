@@ -5,5 +5,5 @@ using rust
 exe{*}: test = true
 
 # The test target for cross-testing (running tests under Wine, etc).
-# @@ TODO
-#test.target = $rust.target
+#
+test.target = $rust.target

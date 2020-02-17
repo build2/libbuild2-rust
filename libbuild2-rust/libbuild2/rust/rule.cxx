@@ -49,7 +49,6 @@ namespace build2
       //
       {
         bool exe (true);
-        string tclass ("not windows"); //@@ TODO
 
         const char* e (nullptr); // Extension.
         const char* p (nullptr); // Prefix.
@@ -67,7 +66,7 @@ namespace build2
 
         if (exe)
         {
-          if (tclass == "windows")
+          if (r_tclass == "windows")
             e = "exe";
           else
             e = "";

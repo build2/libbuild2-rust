@@ -15,6 +15,10 @@ namespace build2
     {
       const process_path& r_path; // rust.path
       const strings&      r_mode; // rust.mode
+
+      const target_triplet& r_target;   // rust.target
+      const string&         r_tsys;     // rust.target.system
+      const string&         r_tclass;   // rust.target.class
     };
 
     class compile_rule: public rule, virtual data
