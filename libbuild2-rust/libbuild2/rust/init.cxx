@@ -37,8 +37,10 @@ namespace build2
       //
       config::save_module (rs, "rust", 250);
 
-      // Process variables.
+      // Configuration.
       //
+      using config::lookup_config;
+
       auto& vp (rs.var_pool ());
 
       //-
@@ -51,18 +53,18 @@ namespace build2
       // that should not be overridden by the buildfiles.
       //
       // -
-      bool new_cfg;
+      bool new_cfg (false);
       process_path ppath;
       strings mode;
       {
         auto& var (vp.insert<strings> ("config.rust", true));
-        auto r (config::required (rs, var, strings {"rustc"}));
 
-        new_cfg = r.second;
+        const auto& val (
+          cast<strings> (
+            lookup_config (new_cfg, rs, var, strings {"rustc"})));
 
         // Split the value into the compiler path and mode.
         //
-        const strings& val (cast<strings> (*r.first));
         const string& s (val.empty () ? string () : val.front ());
 
         path p; try { p = path (s); } catch (const invalid_path&) {}
