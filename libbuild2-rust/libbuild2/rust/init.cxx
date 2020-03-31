@@ -57,7 +57,7 @@ namespace build2
       process_path ppath;
       strings mode;
       {
-        auto& var (vp.insert<strings> ("config.rust", true));
+        auto& var (vp.insert<strings> ("config.rust"));
 
         const auto& val (
           cast<strings> (
