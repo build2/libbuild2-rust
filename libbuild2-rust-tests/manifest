@@ -7,6 +7,5 @@ license: MIT ; MIT License.
 description-file: README.md
 url: https://github.com/build2/libbuild2-rust
 email: users@build2.org
-builds: none ; Only built together with libbuild2-rust.
 depends: * build2 >= 0.13.0-
 depends: * bpkg >= 0.13.0-
