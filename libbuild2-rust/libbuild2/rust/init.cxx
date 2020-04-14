@@ -30,7 +30,7 @@ namespace build2
 
       // We only support root loading (which means there can only be one).
       //
-      if (&rs != &bs)
+      if (rs != bs)
         fail (loc) << "rust.guess module must be loaded in project root";
 
       // Adjust module config.build save priority (compiler).
@@ -222,7 +222,7 @@ namespace build2
       tracer trace ("rust::const_init");
       l5 ([&]{trace << "for " << bs;});
 
-      if (&rs != &bs)
+      if (rs != bs)
         fail (loc) << "rust.config module must be loaded in project root";
 
       // Load rust.guess and share its module instance as ours.
@@ -296,7 +296,7 @@ namespace build2
       tracer trace ("rust::init");
       l5 ([&]{trace << "for " << bs;});
 
-      if (&rs != &bs)
+      if (rs != bs)
         fail (loc) << "rust module must be loaded in project root";
 
       // Load rust.config and share its module instance as ours.
