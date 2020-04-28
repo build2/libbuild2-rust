@@ -10,12 +10,6 @@ namespace build2
 {
   namespace rust
   {
-    compile_rule::
-    compile_rule (data&& d)
-        : data (move (d))
-    {
-    }
-
     bool compile_rule::
     match (action a, target& t, const string&) const
     {

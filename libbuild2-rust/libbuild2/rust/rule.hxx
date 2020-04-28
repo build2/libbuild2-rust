@@ -24,7 +24,7 @@ namespace build2
     class compile_rule: public rule, virtual data
     {
     public:
-      compile_rule (data&&);
+      compile_rule (data&& d): data (move (d)) {}
 
       virtual bool
       match (action, target&, const string&) const override;

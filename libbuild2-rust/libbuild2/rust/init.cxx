@@ -124,8 +124,8 @@ namespace build2
       // Compiler process path and mode options. These are components of
       // the `config.rust` value.
       // -
-      auto& r_path (rs.assign ("rust.path", move (ppath)));
-      auto& r_mode (rs.assign ("rust.mode", move (mode)));
+      auto& r_path (rs.assign<process_path> ("rust.path", move (ppath)));
+      auto& r_mode (rs.assign<strings>      ("rust.mode", move (mode)));
 
       //-
       //
@@ -150,8 +150,8 @@ namespace build2
       // `config.rust` and not `config.rust.coptions`.
       //
       // -
-      rs.assign ("rust.signature") = ci.signature;
-      rs.assign ("rust.checksum") = ci.checksum;
+      rs.assign<string> ("rust.signature") = ci.signature;
+      rs.assign<string> ("rust.checksum")  = ci.checksum;
 
       //-
       //     rust.version       [string]
@@ -164,11 +164,11 @@ namespace build2
       // output.
       //
       //-
-      rs.assign ("rust.version") = ci.version.string ();
-      rs.assign ("rust.version.major") = ci.version.major;
-      rs.assign ("rust.version.minor") = ci.version.minor;
-      rs.assign ("rust.version.patch") = ci.version.patch;
-      rs.assign ("rust.version.build") = ci.version.build;
+      rs.assign<string>   ("rust.version")       = ci.version.string ();
+      rs.assign<uint64_t> ("rust.version.major") = ci.version.major;
+      rs.assign<uint64_t> ("rust.version.minor") = ci.version.minor;
+      rs.assign<uint64_t> ("rust.version.patch") = ci.version.patch;
+      rs.assign<string>   ("rust.version.build") = ci.version.build;
 
       //-
       //     rust.target         [target_triplet]
@@ -184,13 +184,13 @@ namespace build2
       // `libbutl` for details.
       //
       // -
-      rs.assign ("rust.target.cpu")     = tt.cpu;
-      rs.assign ("rust.target.vendor")  = tt.vendor;
-      rs.assign ("rust.target.system")  = tt.system;
-      rs.assign ("rust.target.version") = tt.version;
-      rs.assign ("rust.target.class")   = tt.class_;
+      rs.assign<string> ("rust.target.cpu")     = tt.cpu;
+      rs.assign<string> ("rust.target.vendor")  = tt.vendor;
+      rs.assign<string> ("rust.target.system")  = tt.system;
+      rs.assign<string> ("rust.target.version") = tt.version;
+      rs.assign<string> ("rust.target.class")   = tt.class_;
 
-      auto& r_target (rs.assign ("rust.target", move (tt)));
+      auto& r_target (rs.assign<target_triplet> ("rust.target", move (tt)));
 
       // Cache some values in the module for easier access in the rule.
       //
@@ -236,7 +236,7 @@ namespace build2
       // If this is a new value (e.g., we are configuring), then print the
       // report at verbosity level 2 and up (-v).
       //
-      if (verb >= (m.new_config ? 2 : 3))
+      if (verb >= (m.new_cfg ? 2 : 3))
       {
         diag_record dr (text);
 
