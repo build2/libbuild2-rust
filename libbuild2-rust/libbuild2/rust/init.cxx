@@ -124,8 +124,10 @@ namespace build2
       // Compiler process path and mode options. These are components of
       // the `config.rust` value.
       // -
-      auto& r_path (rs.assign<process_path> ("rust.path", move (ppath)));
-      auto& r_mode (rs.assign<strings>      ("rust.mode", move (mode)));
+      auto& r_path (rs.assign<process_path_ex> (
+                      "rust.path",
+                      process_path_ex (move (ppath), "rust", ci.checksum)));
+      auto& r_mode (rs.assign<strings> ("rust.mode", move (mode)));
 
       //-
       //
