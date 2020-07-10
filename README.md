@@ -2,7 +2,9 @@
 
 Rust build system module for `build2`.
 
-Currently requires nightly Rust (due to [Rust issue
+For build instructions see [`libbuild2-hello/README`](https://github.com/build2/libbuild2-hello).
+
+Currently this module requires nightly Rust (due to [Rust issue
 #38338](https://github.com/rust-lang/rust/issues/38338)). You can either pass
 `+nightly` as part of `config.rust`, for example:
 
