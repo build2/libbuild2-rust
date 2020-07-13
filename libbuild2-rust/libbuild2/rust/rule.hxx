@@ -21,7 +21,7 @@ namespace build2
       const string&         r_tclass;   // rust.target.class
     };
 
-    class compile_rule: public rule, virtual data
+    class compile_rule: public simple_rule, virtual data
     {
     public:
       compile_rule (data&& d): data (move (d)) {}
