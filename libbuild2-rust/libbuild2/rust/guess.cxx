@@ -8,8 +8,10 @@ namespace build2
 {
   namespace rust
   {
-    static std::map<string, compiler_info> cache;
-    static mutex cache_mutex;
+    // Extracting rustc information requires running it which can become
+    // expensive if done repeatedly. So we cache the result.
+    //
+    static global_cache<compiler_info> cache;
 
     const compiler_info&
     guess (const process_path& pp, const strings& mo)
@@ -23,11 +25,8 @@ namespace build2
         append_options (cs, mo);
         key = cs.string ();
 
-        mlock l (cache_mutex);
-
-        auto i (cache.find (key));
-        if (i != cache.end ())
-          return i->second;
+        if (const compiler_info* r = cache.find (key))
+          return *r;
       }
 
       sha256 cs;
@@ -169,15 +168,7 @@ namespace build2
 
       ci.checksum = cs.string ();
 
-      // It's possible the cache entry already exists, in which case we
-      // ignore our value.
-      //
-      // But what if the compiler information it contains is different? Well,
-      // we don't generally deal with toolchain changes during the build so we
-      // ignore this special case as well.
-      //
-      mlock l (cache_mutex);
-      return cache.insert (make_pair (move (key), move (ci))).first->second;
+      return cache.insert (move (key), move (ci));
     }
   }
 }
