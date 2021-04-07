@@ -17,6 +17,10 @@ namespace build2
       string signature;
       string checksum;
       string target;
+
+      // List of environment variables that affect the compiler.
+      //
+      const char* const* environment;
     };
 
     // Note that the returned instance is cached.

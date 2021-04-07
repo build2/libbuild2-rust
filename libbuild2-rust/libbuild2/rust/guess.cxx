@@ -8,6 +8,16 @@ namespace build2
 {
   namespace rust
   {
+    // These are taken from rustc(1) but there are probably more (see
+    // https://github.com/rust-lang/rust/issues/16330).
+    //
+    static const char* rustc_env[] = {
+      "RUST_TEST_THREADS",
+      "RUST_TEST_NOCAPTURE",
+      "RUST_MIN_STACK",
+      "RUST_BACKTRACE",
+      nullptr};
+
     // Extracting rustc information requires running it which can become
     // expensive if done repeatedly. So we cache the result.
     //
@@ -167,6 +177,8 @@ namespace build2
       }
 
       ci.checksum = cs.string ();
+
+      ci.environment = rustc_env;
 
       return cache.insert (move (key), move (ci));
     }

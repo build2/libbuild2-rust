@@ -281,6 +281,8 @@ namespace build2
         }
       }
 
+      config::save_environment (rs, ci.environment);
+
       return true;
     }
 
