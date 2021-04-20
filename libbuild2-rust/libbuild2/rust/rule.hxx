@@ -19,6 +19,8 @@ namespace build2
       const target_triplet& r_target;   // rust.target
       const string&         r_tsys;     // rust.target.system
       const string&         r_tclass;   // rust.target.class
+
+      const string env_checksum; // Environment checksum (also in rust.path).
     };
 
     class compile_rule: public simple_rule, virtual data

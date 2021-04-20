@@ -117,7 +117,7 @@ namespace build2
 
       const rs& s (pr.second);
 
-      // @@ TODO: depdb.
+      // @@ TODO: depdb (including env_checksum).
 
       if (!update)
         return pstate;

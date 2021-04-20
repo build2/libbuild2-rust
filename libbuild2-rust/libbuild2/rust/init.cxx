@@ -89,6 +89,10 @@ namespace build2
       //
       const compiler_info& ci (guess (ppath, mode));
 
+      // Hash the environment (used for change detection).
+      //
+      string env_cs (hash_environment (ci.environment));
+
       // Split/canonicalize the target.
       //
       target_triplet tt;
@@ -116,6 +120,8 @@ namespace build2
             info << "consider using the --config-sub option";
         }
       }
+
+      // @@ TODO: add env_cs
 
       //-
       //     rust.path [process_path]
@@ -203,7 +209,8 @@ namespace build2
             r_mode,
             r_target,
             r_target.system,
-            r_target.class_},
+            r_target.class_,
+            move (env_cs)},
           new_cfg,
           ci));
 
