@@ -121,8 +121,6 @@ namespace build2
         }
       }
 
-      // @@ TODO: add env_cs
-
       //-
       //     rust.path [process_path]
       //     rust.mode [strings]
@@ -132,7 +130,8 @@ namespace build2
       // -
       auto& r_path (rs.assign<process_path_ex> (
                       "rust.path",
-                      process_path_ex (move (ppath), "rust", ci.checksum)));
+                      process_path_ex (
+                        move (ppath), "rust", ci.checksum, env_cs)));
       auto& r_mode (rs.assign<strings> ("rust.mode", move (mode)));
 
       //-
