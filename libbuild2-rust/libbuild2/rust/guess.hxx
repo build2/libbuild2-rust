@@ -20,7 +20,7 @@ namespace build2
 
       // List of environment variables that affect the compiler.
       //
-      const char* const* environment;
+      cstrings environment;
     };
 
     // Note that the returned instance is cached.

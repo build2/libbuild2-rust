@@ -8,16 +8,6 @@ namespace build2
 {
   namespace rust
   {
-    // These are taken from rustc(1) but there are probably more (see
-    // https://github.com/rust-lang/rust/issues/16330).
-    //
-    static const char* rustc_env[] = {
-      "RUST_TEST_THREADS",
-      "RUST_TEST_NOCAPTURE",
-      "RUST_MIN_STACK",
-      "RUST_BACKTRACE",
-      nullptr};
-
     // Extracting rustc information requires running it which can become
     // expensive if done repeatedly. So we cache the result.
     //
@@ -27,6 +17,9 @@ namespace build2
     guess (const process_path& pp, const strings& mo)
     {
       // First check the cache.
+      //
+      // Note that none of the information that we cache can be affected by
+      // the environment.
       //
       string key;
       {
@@ -176,9 +169,48 @@ namespace build2
                << " --print=target-spec-json output";
       }
 
-      ci.checksum = cs.string ();
+      // Parse the target into triplet (for further tests) ignoring any
+      // failures.
+      //
+      target_triplet tt;
+      try {tt = target_triplet (ci.target);} catch (const invalid_argument&) {}
 
-      ci.environment = rustc_env;
+      // These are taken from rustc(1) but there are probably more (see rustc
+      // issues 16330, 84386).
+      //
+      // See also the note on environment and caching above if adding any new
+      // variables.
+      //
+      ci.environment = {
+        "RUST_TEST_THREADS",
+        "RUST_TEST_NOCAPTURE",
+        "RUST_MIN_STACK",
+        "RUST_BACKTRACE"};
+
+      // See similar wrangling in cc (with which we are trying to be
+      // compatible).
+      //
+      if (tt.system == "windows-msvc")
+      {
+        // When targeting MSVC, rustc uses link.exe (or lld-link) which both
+        // recognize these.
+        //
+        ci.environment.push_back ("LIB");
+        ci.environment.push_back ("LINK");
+        ci.environment.push_back ("_LINK_");
+      }
+      else if (tt.system == "darwin")
+      {
+        ci.environment.push_back ("MACOSX_DEPLOYMENT_TARGET");
+      }
+      else
+      {
+        // Cover the GNU linker.
+        //
+        ci.environment.push_back ("LD_RUN_PATH");
+      }
+
+      ci.checksum = cs.string ();
 
       return cache.insert (move (key), move (ci));
     }
