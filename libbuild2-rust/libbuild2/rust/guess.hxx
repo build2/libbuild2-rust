@@ -11,6 +11,12 @@ namespace build2
     //
     // See the corresponding rust.* variables documentation for the semantics.
     //
+    // The environment is a list of environment variables that affect the
+    // compiler result.
+    //
+    // Watch out for the environment not to affect any of the extracted
+    // information since we cache it.
+    //
     struct compiler_info
     {
       semantic_version version;
@@ -18,8 +24,6 @@ namespace build2
       string checksum;
       string target;
 
-      // List of environment variables that affect the compiler.
-      //
       cstrings environment;
     };
 
