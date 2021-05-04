@@ -1,9 +1,9 @@
-int_libs = # Interface dependencies.
-imp_libs = # Implementation dependencies.
+intf_libs = # Interface dependencies.
+impl_libs = # Implementation dependencies.
 
-import imp_libs += build2%lib{build2} # Implied interface dependency.
+import impl_libs += build2%lib{build2} # Implied interface dependency.
 
-lib{build2-rust}: {hxx ixx txx cxx}{**} $imp_libs $int_libs
+lib{build2-rust}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
 
 # Build options.
 #
@@ -17,7 +17,7 @@ objs{*}: cxx.poptions += -DLIBBUILD2_RUST_SHARED_BUILD
 lib{build2-rust}:
 {
   cxx.export.poptions = "-I$out_root" "-I$src_root"
-  cxx.export.libs = $int_libs
+  cxx.export.libs = $intf_libs
 }
 
 liba{build2-rust}: cxx.export.poptions += -DLIBBUILD2_RUST_STATIC
