@@ -11,4 +11,4 @@ build-warning-email: builds@build2.org
 builds: host
 depends: * build2 >= 0.14.0-
 depends: * bpkg >= 0.14.0-
-tests: libbuild2-rust-tests == $
+tests: * libbuild2-rust-tests == $
