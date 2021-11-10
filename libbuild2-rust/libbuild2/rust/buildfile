@@ -28,9 +28,9 @@ libs{build2-rust}: cxx.export.poptions += -DLIBBUILD2_RUST_SHARED
 # for details on the version.* variable values.
 #
 if $version.pre_release
-  lib{build2-rust}: bin.lib.version = @"-$version.project_id"
+  lib{build2-rust}: bin.lib.version = "-$version.project_id"
 else
-  lib{build2-rust}: bin.lib.version = @"-$version.major.$version.minor"
+  lib{build2-rust}: bin.lib.version = "-$version.major.$version.minor"
 
 # Embed the build system core version as our load suffix.
 #
