@@ -35,7 +35,7 @@ namespace build2
     {
       tracer trace ("rust::compile_rule::apply");
 
-      file& t (static_cast<file&> (xt));
+      file& t (xt.as<file> ());
 
       // Derive the file name.
       //
