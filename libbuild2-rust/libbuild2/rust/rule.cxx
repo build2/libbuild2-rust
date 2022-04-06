@@ -11,7 +11,7 @@ namespace build2
   namespace rust
   {
     bool compile_rule::
-    match (action a, target& t, const string&) const
+    match (action a, target& t) const
     {
       tracer trace ("rust::compile_rule::match");
 

@@ -8,6 +8,6 @@ description-file: README.md
 url: https://github.com/build2/libbuild2-rust
 email: users@build2.org
 build-warning-email: builds@build2.org
-depends: * build2 >= 0.14.0
-depends: * bpkg >= 0.14.0
+depends: * build2 >= 0.15.0-
+depends: * bpkg >= 0.15.0-
 tests: * libbuild2-rust-tests == $

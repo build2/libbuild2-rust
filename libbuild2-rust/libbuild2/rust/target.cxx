@@ -17,7 +17,7 @@ namespace build2
       &target_pattern_var<rs_ext_def>,
       nullptr /* print */,
       &file_search,
-      false   /* see_through */
+      target_type::flag::none
     };
   }
 }
