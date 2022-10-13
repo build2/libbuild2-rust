@@ -41,7 +41,10 @@ namespace build2
       //
       using config::lookup_config;
 
-      auto& vp (rs.var_pool ());
+      // All the variables we enter are qualified so go straight for the
+      // public variable pool.
+      //
+      auto& vp (rs.var_pool (true /* public */));
 
       //-
       //     config.rust [strings]
