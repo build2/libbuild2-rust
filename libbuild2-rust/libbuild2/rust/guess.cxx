@@ -111,7 +111,7 @@ namespace build2
 
           try
           {
-            ci.version = semantic_version (v);
+            ci.version = semantic_version (v, semantic_version::allow_build);
           }
           catch (const invalid_argument& e)
           {
