@@ -52,6 +52,9 @@ namespace build2
         args.push_back ("-v");     // Verbose.
         args.push_back (nullptr);
 
+        // Note: this function is called in the serial load phase and so no
+        // diagnostics buffering is needed.
+        //
         process pr (run_start (3     /* verbosity */,
                                pp,
                                args,
@@ -87,7 +90,7 @@ namespace build2
           // caused by that and let run_finish() deal with it.
         }
 
-        run_finish (args, pr);
+        run_finish (args, pr, 2 /* verbosity */);
 
         if (ci.signature.empty ())
           fail << "no " << args[0] << " -V output";
@@ -131,6 +134,9 @@ namespace build2
         args.push_back ("--print=target-spec-json");
         args.push_back (nullptr);
 
+        // Note: this function is called in the serial load phase and so no
+        // diagnostics buffering is needed.
+        //
         process pr (run_start (3     /* verbosity */,
                                pp,
                                args,
@@ -162,7 +168,7 @@ namespace build2
                  << " --print=target-spec-json output";
         }
 
-        run_finish (args, pr);
+        run_finish (args, pr, 2 /* verbosity */);
 
         if (ci.target.empty ())
           fail << "no llvm-target in " << args[0]

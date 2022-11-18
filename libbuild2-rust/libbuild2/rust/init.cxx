@@ -33,6 +33,8 @@ namespace build2
       if (rs != bs)
         fail (loc) << "rust.guess module must be loaded in project root";
 
+      context& ctx (rs.ctx);
+
       // Adjust module config.build save priority (compiler).
       //
       config::save_module (rs, "rust", 250);
@@ -104,11 +106,10 @@ namespace build2
         //
         string ct;
         if (config_sub)
-          ct = run<string> (3,
-                            *config_sub,
-                            ci.target.c_str (),
+          ct = run<string> (ctx,
+                            3,
+                            *config_sub, ci.target.c_str (),
                             [] (string& l, bool) {return move (l);});
-
         try
         {
           tt = target_triplet (ct.empty () ? ci.target : ct);

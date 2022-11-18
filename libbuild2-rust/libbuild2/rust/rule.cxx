@@ -148,10 +148,10 @@ namespace build2
       if (verb >= 2)
         print_process (args);
       else if (verb)
-        text << "rust " << s;
+        print_diag ("rust", s, t);
 
       if (!ctx.dry_run)
-        run (r_path, args);
+        run (ctx, r_path, args, 1 /* finish_verbosity */);
 
       t.mtime (system_clock::now ());
       return target_state::changed;
