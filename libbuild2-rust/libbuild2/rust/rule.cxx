@@ -132,6 +132,24 @@ namespace build2
 
       append_options (args, r_mode);
 
+      // Enable/disable diagnostics color unless a custom option is specified.
+      //
+      // Note that custom --color can be specified as both --color=X and
+      // --color X.
+      //
+      if (!find_option ("--color", args) &&
+          !find_option_prefix ("--color=", args))
+      {
+        // Omit --color=never if stderr is not a terminal (we know there will
+        // be no color in this case and the option will just add noise, for
+        // example, in build logs).
+        //
+        if (const char* o = (show_diag_color () ? "--color=always" :
+                             stderr_term        ? "--color=never"  :
+                             nullptr))
+          args.push_back (o);
+      }
+
       // Using the target name as the crate name seems appropriate.
       //
       args.push_back ("--crate-name");
