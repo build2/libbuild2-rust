@@ -4,9 +4,8 @@ Rust build system module for `build2`.
 
 For build instructions see [`libbuild2-hello/README`](https://github.com/build2/libbuild2-hello).
 
-Currently this module requires nightly Rust (due to [Rust issue
-#38338](https://github.com/rust-lang/rust/issues/38338)). You can pass
-`+nightly` as part of `config.rust`, for example, in your project:
+You can pass "compiler mode" options, such as `+nightly`, as part of
+`config.rust`, for example, in your project:
 
 ```
 $ b configure config.rust="rustc +nightly"
@@ -18,14 +17,6 @@ Or when initializing `libbuild2-rust-tests`:
 bdep init @target -d libbuild2-rust-tests/ config.rust="rustc +nightly"
 ```
 
-Alternatively, you can make the nightly build the default (it's also possible
-to do this per directory, see [Managing
-versions](https://doc.rust-lang.org/edition-guide/rust-2018/rustup-for-managing-rust-versions.html#managing-versions)
-for details). For example:
-
-```
-$ rustup default nightly
-```
 
 ## Cross-compiling for Windows
 

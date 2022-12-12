@@ -38,13 +38,12 @@ namespace build2
       // First extract the version.
       //
       {
-        // What about localization, you may ask. That's a good question.
+        // What about localization, you may ask? That's a good question.
         // Ideally rustc would provide a stable, machine-readable format
         // (maybe JSON) for querying this information. Perhaps combined with
         // --print=target-spec-json so that we can obtain everything with a
-        // single invocation; see Rust issue #38338. But for now the rustc
-        // source code has no traces of localization and so we also stay in
-        // a blissful ignorance of the issue.
+        // single invocation; see Rust issues #105588, #38338. For now we use
+        // LC_ALL=C.
         //
         cstrings args {pp.recall_string ()};
         append_options (args, mo); // For example, +nightly.
@@ -52,11 +51,13 @@ namespace build2
         args.push_back ("-v");     // Verbose.
         args.push_back (nullptr);
 
+        const char* evars[] = {"LC_ALL=C", nullptr};
+
         // Note: this function is called in the serial load phase and so no
         // diagnostics buffering is needed.
         //
         process pr (run_start (3     /* verbosity */,
-                               pp,
+                               process_env (pp, evars),
                                args,
                                0     /* stdin */,
                                -1    /* stdout */));
@@ -134,11 +135,16 @@ namespace build2
         args.push_back ("--print=target-spec-json");
         args.push_back (nullptr);
 
+        // Unstable options can only be used with the nightly build of the
+        // compiler unless we pass the magic RUSTC_BOOTSTRAP=1.
+        //
+        const char* evars[] = {"LC_ALL=C", "RUSTC_BOOTSTRAP=1", nullptr};
+
         // Note: this function is called in the serial load phase and so no
         // diagnostics buffering is needed.
         //
         process pr (run_start (3     /* verbosity */,
-                               pp,
+                               process_env (pp, evars),
                                args,
                                0     /* stdin */,
                                -1    /* stdout */));
