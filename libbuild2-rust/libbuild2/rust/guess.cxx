@@ -23,7 +23,7 @@ namespace build2
       //
       string key;
       {
-        sha256 cs;
+        xxh64 cs;
         cs.append (pp.effect_string ());
         append_options (cs, mo);
         key = cs.string ();
@@ -32,7 +32,7 @@ namespace build2
           return *r;
       }
 
-      sha256 cs;
+      xxh64 cs;
       compiler_info ci;
 
       // First extract the version.
